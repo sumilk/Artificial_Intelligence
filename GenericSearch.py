@@ -287,11 +287,11 @@ class PacmanManager(GameManager):
             self.game_observer.update(self.game_state_node.game_state)
 
 
-class TicTacToeManager(GameManager):
-    """Concrete implementation of the management for Tic Tac Toe."""
-
-    def play(self):
-        self.expand_state_space(self.game_state_node)
+# class TicTacToeManager(GameManager):
+#     """Concrete implementation of the management for Tic Tac Toe."""
+#
+#     def play(self):
+#         self.expand_state_space(self.game_state_node)
 
 class TicTacToeManager(GameManager):
     """Concrete implementation of the manager for Tic Tac Toe game."""
