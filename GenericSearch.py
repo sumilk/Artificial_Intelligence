@@ -119,19 +119,67 @@ class ConsoleObserver(GameObserver):
         print(game_state.board)
 
 
-class GameManager:
+class ConsoleObserver(GameObserver):
+    """Concrete implementation of the observer for displaying the game state in the console."""
+
+    def update(self, game_state):
+        print(game_state)
+
+
+class GameManager(ABC):
+    """Abstract class for managing a game.
+    Concrete subclasses will define the management for specific games.
+    """
+
     def __init__(self, game_state, game_solver, game_observer):
         self.game_state = game_state
         self.game_solver = game_solver
         self.game_observer = game_observer
 
+    @abstractmethod
     def play(self):
-        while not self.game_state.is_win() and not self.game_state.is_draw():
-            self.game_observer.update(self.game_state)
-            move = self.game_solver.solve(self.game_state)
-            self.game_state.update(move)
-        self.game_observer.update(self.game_state)
-        if self.game_state.is_win():
-            print("Player wins!")
-        elif self.game_state.is_draw():
-            print("Draw!")
+        pass
+
+
+class PacmanManager(GameManager):
+    """Concrete implementation of the management for Pacman."""
+
+    def play(self):
+        pass
+
+
+class TicTacToeManager(GameManager):
+    """Concrete implementation of the management for Tic Tac Toe."""
+
+    def play(self):
+        pass
+
+
+class GameFactory:
+    """Factory for creating instances of specific games and their related classes."""
+
+    @staticmethod
+    def create_game(game_type):
+        if game_type == "Pacman":
+            board =  # ...
+            pacman_position =  # ...
+            exit_position =  # ...
+            red_pellets =  # ...
+            green_pellets =  # ...
+            game_state = PacmanState(board, pacman_position, exit_position, red_pellets, green_pellets)
+            game_solver = AStarSolver()
+            game_observer=ConsoleObserver()
+            return PacmanManager(game_state, game_solver, game_observer)
+        elif game_type == "TicTacToe":
+            board =  # ...
+            game_state = TicTacToeState(board)
+            game_solver = MinMaxSolver()
+            game_observer = ConsoleObserver()
+            return TicTacToeManager(game_state, game_solver, game_observer)
+
+# Example usage
+game = GameFactory.create_game("Pacman")
+game.play()
+
+game = GameFactory.create_game("TicTacToe")
+game.play()
